@@ -21,18 +21,24 @@
     "migration:generate": "ts-node -r tsconfig-paths/register src/scripts/migration-generate.ts",
     "migration:run": "ts-node -r tsconfig-paths/register src/scripts/migration-run.ts",
     "migration:revert": "ts-node -r tsconfig-paths/register src/scripts/migration-revert.ts",
-    "migration:show": "ts-node -r tsconfig-paths/register src/scripts/migration-show.ts"
+    "migration:show": "ts-node -r tsconfig-paths/register src/scripts/migration-show.ts",
+    "create:admin": "ts-node -r tsconfig-paths/register src/scripts/create-admin.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/mapped-types": "*",
     "@nestjs/config": "^4.0.2",
     "@nestjs/typeorm": "^11.0.0",
+    "@nestjs/passport": "^11.0.5",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.28",
-    "mysql2": "^3.16.0"
+    "mysql2": "^3.16.0",
+    "argon2": "^0.44.0",
+    "passport-jwt": "^4.0.1",
+    "class-validator": "^0.14.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -40,10 +46,13 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/nodemailer": "^7.0.4",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
@@ -57,7 +66,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "nodemailer": "^7.0.12"
   },
   "jest": {
     "moduleFileExtensions": [
