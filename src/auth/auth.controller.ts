@@ -12,6 +12,7 @@ import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ActivateAccountDto } from './dto/activate-account.dto';
 import { Public } from './decorators/public.decorator';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,12 @@ export class AuthController {
   @Post('register-seller')
   async registerSeller(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto, UserRoleEnum.SELLER);
+  }
+
+  @Roles(UserRoleEnum.ADMIN)
+  @Post('register-manager')
+  async registerManager(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto, UserRoleEnum.MANAGER);
   }
 
   @Public()

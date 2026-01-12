@@ -7,6 +7,8 @@ import { TypeormModule } from './type-orm.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from './mailer/mailer.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { AutoModule } from './auto/auto.module';
+import { RolesGuard } from './auth/guards/role.guard';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     TypeormModule,
     AuthModule,
     MailerModule,
+    AutoModule,
   ],
   controllers: [],
   providers: [
@@ -25,6 +28,10 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
