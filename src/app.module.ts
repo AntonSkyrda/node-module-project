@@ -9,15 +9,19 @@ import { MailerModule } from './mailer/mailer.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { AutoModule } from './auto/auto.module';
 import { RolesGuard } from './auth/guards/role.guard';
+import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    ScheduleModule.forRoot(),
     SharedModule,
     TypeormModule,
     AuthModule,
     MailerModule,
     AutoModule,
+    ExchangeRateModule,
   ],
   controllers: [],
   providers: [

@@ -26,6 +26,8 @@ export class EnvService {
   public readonly adminFirstName: string;
   public readonly adminLastName: string;
 
+  public readonly bankFetchUrl: string;
+
   constructor(private configService: ConfigService) {
     this.dbType = configService.get<string>('DB_TYPE') || '';
     this.dbHost = configService.get<string>('DB_HOST') || '';
@@ -52,5 +54,7 @@ export class EnvService {
     this.adminPassword = configService.get<string>('ADMIN_PASSWORD') || '';
     this.adminFirstName = configService.get<string>('ADMIN_FIRST_NAME') || '';
     this.adminLastName = configService.get<string>('ADMIN_LAST_NAME') || '';
+
+    this.bankFetchUrl = configService.get<string>('BANK_FETCH_URL') || '';
   }
 }
