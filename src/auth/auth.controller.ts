@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   Post,
   Query,
 } from '@nestjs/common';
@@ -13,6 +14,8 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ActivateAccountDto } from './dto/activate-account.dto';
 import { Public } from './decorators/public.decorator';
 import { Roles } from './decorators/roles.decorator';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -67,5 +70,10 @@ export class AuthController {
     }
 
     await this.authService.activate(token, activateTokenDto.password);
+  }
+
+  @Get('me')
+  async me(@CurrentUser() user: User) {
+    return await this.authService.me(user.id);
   }
 }

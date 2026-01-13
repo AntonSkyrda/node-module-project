@@ -5,12 +5,14 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as argon2 from 'argon2';
 import { UserRoleEnum } from '../../constants/user-role.enum';
 import { Token } from './token.entity';
+import { Account } from './account.entity';
 
 @Entity('users')
 export class User {
@@ -46,6 +48,9 @@ export class User {
 
   @OneToMany(() => Token, (token) => token.user)
   tokens: Token[];
+
+  @OneToOne(() => Account, (account) => account.user, { nullable: true })
+  account?: Account;
 
   @BeforeInsert()
   @BeforeUpdate()

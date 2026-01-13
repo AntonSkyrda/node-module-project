@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,6 +18,8 @@ import { LoginDto } from './dto/login.dto';
 import { ITokens } from './interfaces/tokens.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { IActivationTokenPayload } from './types/actIvation-token-payload';
+import { AccountTypeEnum } from '../constants/account-type.enum';
+import { Account } from './entities/account.entity';
 
 @Injectable()
 export class AuthService {
@@ -30,6 +33,8 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Token)
     private readonly tokenRepository: Repository<Token>,
+    @InjectRepository(Account)
+    private readonly accountRepository: Repository<Account>,
     private readonly jwtService: JwtService,
     private readonly envService: EnvService,
     private readonly mailerService: MailerService,
@@ -60,6 +65,14 @@ export class AuthService {
     });
 
     const savedUser = await this.userRepository.save(user);
+
+    if (userRole === UserRoleEnum.SELLER) {
+      const account = this.accountRepository.create({
+        user: savedUser,
+        type: AccountTypeEnum.BASIC,
+      });
+      await this.accountRepository.save(account);
+    }
 
     const activationToken = this.jwtService.sign(
       {
@@ -254,6 +267,18 @@ export class AuthService {
     user.isActive = true;
 
     await this.userRepository.save(user);
+  }
+
+  async me(userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['account'],
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 
   private generateJti(): string {
