@@ -15,7 +15,7 @@ export class MailerService {
       service: 'gmail',
       auth: {
         user: this.envService.smtpUser,
-        pass: this.envService.smtpPassword, // для Gmail це має бути App Password
+        pass: this.envService.smtpPassword,
       },
     });
   }

@@ -104,6 +104,19 @@ export class AutoService {
     }
   }
 
+  async getModelByIdWithAuto(id: number): Promise<Model> {
+    const model = await this.modelRepository.findOne({
+      where: { id },
+      relations: { auto: true },
+    });
+
+    if (!model) {
+      throw new NotFoundException(`Model with id ${id} not found`);
+    }
+
+    return model;
+  }
+
   async updateModelById(
     id: number,
     updateModelDto: UpdateModelDto,

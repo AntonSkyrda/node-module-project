@@ -1,0 +1,16 @@
+<p>Listing <b>#{{listingId}}</b> moved to inactive status <b>INACTIVE</b>, after 3 failed checks <b>{{moderationFails}}</b>.</p>
+
+<p><b>Seller:</b> {{sellerName}} ({{sellerEmail}})</p>
+<p><b>Auto:</b> {{autoMark}} / {{modelName}}, {{year}} р.</p>
+<p><b>City:</b> {{city}}</p>
+
+<p><b>Title:</b> {{title}}</p>
+<p><b>Description:</b><br/>{{description}}</p>
+
+{{#if flaggedWords}}
+    <p><b>Founded issues:</b> {{flaggedWords}}</p>
+{{/if}}
+
+<p>
+    Listing Url: <a href="{{listingUrl}}">{{listingUrl}}</a>
+</p>
