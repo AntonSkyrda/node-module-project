@@ -1,17 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Index,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity('exchange_rates')
+@Index(['provider', 'asOfDate'], { unique: true }) // опціонально, але бажано
 export class ExchangeRate {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 20 })
   provider!: 'PRIVATBANK';
 
   @Column({ type: 'date' })
   asOfDate!: string;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'datetime' })
+  @CreateDateColumn()
   fetchedAt!: Date;
 
   @Column({ type: 'decimal', precision: 14, scale: 6 })
@@ -26,6 +34,6 @@ export class ExchangeRate {
   @Column({ type: 'decimal', precision: 14, scale: 6 })
   eurSale!: string;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'json', nullable: true })
   raw?: unknown;
 }

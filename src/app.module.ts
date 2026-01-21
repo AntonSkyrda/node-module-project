@@ -11,6 +11,8 @@ import { AutoModule } from './auto/auto.module';
 import { RolesGuard } from './auth/guards/role.guard';
 import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ProfanityCheckerModule } from './profanity-checker/profanity-checker.module';
+import { ListingModule } from './listing/listing.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     MailerModule,
     AutoModule,
     ExchangeRateModule,
+    ListingModule,
+    ProfanityCheckerModule,
   ],
   controllers: [],
   providers: [

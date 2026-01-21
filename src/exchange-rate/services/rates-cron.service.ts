@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ExchangeRatesService } from '../exchenge-rate.service';
 import { DataSource } from 'typeorm';
 import { Cron } from '@nestjs/schedule';
+import { ExchangeRateService } from '../exchenge-rate.service';
+import { RECALC_LISTING_PRICES_SQL } from '../sql/recalculate-listing-prices.sql';
 
 @Injectable()
 export class RatesCronService {
   constructor(
-    private readonly exchangeRatesService: ExchangeRatesService,
+    private readonly exchangeRateService: ExchangeRateService,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -15,12 +16,20 @@ export class RatesCronService {
   })
   async refreshRatesAndRecalculatePrices() {
     await this.dataSource.transaction(async (manager) => {
-      const rate = await this.exchangeRatesService.fetchAndStoreToday();
-      await manager.query('SQL', {
-        rateId: rate.id,
-        usdSale: rate.usdSale,
-        eurSale: rate.eurSale,
-      });
+      const rate = await this.exchangeRateService.fetchAndStoreToday();
+
+      const usdSale = Number(rate.usdSale);
+      const eurSale = Number(rate.eurSale);
+
+      await manager.query(RECALC_LISTING_PRICES_SQL, [
+        rate.id,
+        usdSale,
+        eurSale,
+        eurSale,
+        usdSale,
+        usdSale,
+        eurSale,
+      ]);
     });
   }
 }

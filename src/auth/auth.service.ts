@@ -284,4 +284,14 @@ export class AuthService {
   private generateJti(): string {
     return Math.random().toString(36).slice(2);
   }
+
+  async getActiveManagers(): Promise<User[]> {
+    return this.userRepository.find({
+      where: {
+        role: UserRoleEnum.MANAGER,
+        isActive: true,
+        isBlocked: false,
+      },
+    });
+  }
 }

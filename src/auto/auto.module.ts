@@ -9,5 +9,6 @@ import { Model } from './entities/model.entity';
   imports: [TypeOrmModule.forFeature([Auto, Model])],
   controllers: [AutoController],
   providers: [AutoService],
+  exports: [AutoService],
 })
 export class AutoModule {}

@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CurrencyEnum } from '../constants/currency.enum';
 
 @Injectable()
-export class ExchangeRatesService {
+export class ExchangeRateService {
   constructor(
     @InjectRepository(ExchangeRate)
     private readonly exchangeRateRepository: Repository<ExchangeRate>,
@@ -42,9 +42,11 @@ export class ExchangeRatesService {
   }
 
   async getLatest(): Promise<ExchangeRate> {
-    const rate = await this.exchangeRateRepository.findOne({
+    const [rate] = await this.exchangeRateRepository.find({
       order: { fetchedAt: 'DESC' },
+      take: 1,
     });
+
     if (!rate) throw new Error('No exchange rates in DB yet');
     return rate;
   }
