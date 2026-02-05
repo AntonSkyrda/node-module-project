@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email</title>
+
+    <style>
+        body { margin:0; padding:0; background:#f5f7fa; font-family: Arial, sans-serif; }
+        .wrapper { width:100%; background:#f5f7fa; padding:40px 0; }
+        .container { max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+        .header { background:linear-gradient(135deg,#4e8df5,#6b51f5); padding:24px; text-align:center; color:#fff; }
+        .header h1 { margin:0; font-size:24px; font-weight:600; }
+        .content { padding:32px 24px; color:#333; }
+        .footer { background:#f0f2f5; padding:16px; text-align:center; color:#777; font-size:12px; }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <h1>{{title}}</h1>
+        </div>
+
+        <div class="content">
+            {{{content}}}
+        </div>
+
+        <div class="footer">
+            © {{year}} All Rights Reserved.
+        </div>
+    </div>
+</div>
+</body>
+</html>
